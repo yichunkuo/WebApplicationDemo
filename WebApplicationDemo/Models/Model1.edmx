@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DemoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="apply_file">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="file_path" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="orgs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="org_no" Type="varchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="syslog">
+          <Key>
+            <PropertyRef Name="seq_no" />
+          </Key>
+          <Property Name="seq_no" Type="int" Nullable="false" />
+          <Property Name="user_account" Type="varchar" MaxLength="50" />
+          <Property Name="ipaddress" Type="varchar" MaxLength="50" />
+          <Property Name="login_at" Type="datetime" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="org_id" Type="int" />
+          <Property Name="user_name" Type="varchar" MaxLength="255" />
+          <Property Name="birthday" Type="date" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="user_account" Type="varchar" MaxLength="50" />
+          <Property Name="user_hash" Type="varchar" MaxLength="255" />
+          <Property Name="user_salt" Type="varchar" MaxLength="16" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__apply_fil__user___32E0915F">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="apply_file" Type="Self.apply_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="apply_file">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__org_id__300424B4">
+          <End Role="orgs" Type="Self.orgs" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orgs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="org_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DemoDBModelStoreContainer">
+          <EntitySet Name="apply_file" EntityType="Self.apply_file" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orgs" EntityType="Self.orgs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="syslog" EntityType="Self.syslog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__apply_fil__user___32E0915F" Association="Self.FK__apply_fil__user___32E0915F">
+            <End Role="users" EntitySet="users" />
+            <End Role="apply_file" EntitySet="apply_file" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__org_id__300424B4" Association="Self.FK__users__org_id__300424B4">
+            <End Role="orgs" EntitySet="orgs" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DemoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="apply_file">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="file_path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK__apply_fil__user___32E0915F" FromRole="apply_file" ToRole="users" />
+        </EntityType>
+        <EntityType Name="orgs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="org_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__org_id__300424B4" FromRole="orgs" ToRole="users" />
+        </EntityType>
+        <EntityType Name="syslog">
+          <Key>
+            <PropertyRef Name="seq_no" />
+          </Key>
+          <Property Name="seq_no" Type="Int32" Nullable="false" />
+          <Property Name="user_account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ipaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="login_at" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="org_id" Type="Int32" />
+          <Property Name="user_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" Precision="0" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="user_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_salt" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="apply_file" Relationship="Self.FK__apply_fil__user___32E0915F" FromRole="users" ToRole="apply_file" />
+          <NavigationProperty Name="orgs" Relationship="Self.FK__users__org_id__300424B4" FromRole="users" ToRole="orgs" />
+        </EntityType>
+        <Association Name="FK__apply_fil__user___32E0915F">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="apply_file" Type="Self.apply_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="apply_file">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__org_id__300424B4">
+          <End Role="orgs" Type="Self.orgs" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orgs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="org_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DemoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="apply_file" EntityType="Self.apply_file" />
+          <EntitySet Name="orgs" EntityType="Self.orgs" />
+          <EntitySet Name="syslog" EntityType="Self.syslog" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK__apply_fil__user___32E0915F" Association="Self.FK__apply_fil__user___32E0915F">
+            <End Role="users" EntitySet="users" />
+            <End Role="apply_file" EntitySet="apply_file" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__org_id__300424B4" Association="Self.FK__users__org_id__300424B4">
+            <End Role="orgs" EntitySet="orgs" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DemoDBModelStoreContainer" CdmEntityContainer="DemoDBEntities">
+          <EntitySetMapping Name="apply_file">
+            <EntityTypeMapping TypeName="DemoDBModel.apply_file">
+              <MappingFragment StoreEntitySet="apply_file">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="file_path" ColumnName="file_path" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orgs">
+            <EntityTypeMapping TypeName="DemoDBModel.orgs">
+              <MappingFragment StoreEntitySet="orgs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="org_no" ColumnName="org_no" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="syslog">
+            <EntityTypeMapping TypeName="DemoDBModel.syslog">
+              <MappingFragment StoreEntitySet="syslog">
+                <ScalarProperty Name="seq_no" ColumnName="seq_no" />
+                <ScalarProperty Name="user_account" ColumnName="user_account" />
+                <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
+                <ScalarProperty Name="login_at" ColumnName="login_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="DemoDBModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="org_id" ColumnName="org_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_account" ColumnName="user_account" />
+                <ScalarProperty Name="user_hash" ColumnName="user_hash" />
+                <ScalarProperty Name="user_salt" ColumnName="user_salt" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
