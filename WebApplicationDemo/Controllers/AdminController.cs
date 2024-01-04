@@ -6,11 +6,17 @@ using System.Web.Mvc;
 
 namespace WebApplicationDemo.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
-
+        // GET: Admin
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult ReviewUsers()
+        {
+            // 管理者審核使用者的相應動作
             return View();
         }
     }
