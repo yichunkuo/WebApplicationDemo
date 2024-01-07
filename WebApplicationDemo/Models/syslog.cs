@@ -18,6 +18,7 @@ namespace WebApplicationDemo.Models
         public string user_account { get; set; }
         public string ipaddress { get; set; }
         public Nullable<System.DateTime> login_at { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
+        public Nullable<System.DateTimeOffset> created_at { get; set; }
+        public string note { get; set; }
     }
 }

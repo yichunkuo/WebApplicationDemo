@@ -6,11 +6,12 @@ using System.Web.Mvc;
 
 namespace WebApplicationDemo.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         public ActionResult Index()
         {
+            ViewBag.Message = TempData["Message"] as string;
             return View();
         }
     }

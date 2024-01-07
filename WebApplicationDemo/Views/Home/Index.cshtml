@@ -2,32 +2,62 @@
     ViewBag.Title = "Home Page";
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-info">
+        <h2>@ViewBag.Message</h2>
+    </div>
+}
+
 <main>
+
     <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        <h1 id="title">歡迎光臨</h1>
+        <p class="lead">這裡是一個測試站，因為時間的關係先做了這些，下面有一些好用的套件跟文章，一般都會自己寫成helper方便叫用</p>
+
+        <p><a href="#" class="btn btn-primary btn-md" onclick="undo()">更多套件介紹 &raquo;</a></p>
     </section>
 
     <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <section class="col-md-4">
+            <div class="shadow p-4">
+                <h2>表格處理</h2>
+                <hr />
+                <p>
+                    <a href="https://datatables.net/">DataTables</a> 是 jQuery Javascript 庫的插件。
+                    它是一種高度靈活的工具，針對處理table資料非常方便，只要引入此套件就有像是分頁、搜尋、排序…等功能，也提供多項客製化選項，開發人員只需要下載並引用相關函式庫即可。
+                </p>
+                <p>可參考 <a href="https://ithelp.ithome.com.tw/articles/10272439"> table界的神器!DataTables介紹篇</a></p>
+                <p><a class="btn btn-outline-dark" href="">DataTables官網這裡走 &raquo;</a></p>
+            </div>
         </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+        <section class="col-md-4">
+            <div class="shadow p-4">
+                <h2>匯出excel</h2>
+                <hr />
+                <p>
+                    匯出 Excel 的功能可以使用很多方式來完成，例如直接使用 Open XML SDK、NPOI、EPPlus 或是一些需付費的第三方套件。
+                    <br />簡單的匯出可以用ClosedXML，其他匯出PDF或word等也有很多第三方套件。
+                </p>
+                <p>可參考<a href="https://ithelp.ithome.com.tw/articles/10219329"> 鐵人賽MVC利用ColseXML</a></p>
+            </div>
         </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <section class="col-md-4">
+            <div class="shadow p-4">
+                <h2>寄發Gmail</h2>
+                <hr />
+                <p>
+                    現在Google帳戶都要先開啟「兩步驟驗證」，然後點擊「應用程式密碼」，比較麻煩要弄一個發信專用信箱，而且偶爾還會被丟去垃圾信。
+                    <br />
+                    實際介接則不會很困難，很多sample code，密碼最好是另外放
+                </p>
+                <p>可參考<a href="https://blog.hungwin.com.tw/cs-gmail/"> 如何使用 Gmail 免費發信L</a></p>
+            </div>
         </section>
     </div>
+
+
+
+
 </main>

@@ -9,6 +9,7 @@ namespace WebApplicationDemo.Models
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "請填寫姓名")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "長度應介於 {2} 到 {1} 字元")]
         [Display(Name = "姓名")]
         public string Name { get; set; }
 
@@ -27,22 +28,25 @@ namespace WebApplicationDemo.Models
 
         [Required(ErrorMessage = "請填寫密碼")]
         [DataType(DataType.Password)]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "密碼長度應介於 {2} 到 {1} 字元")]
+        [StringLength(16, MinimumLength = 8, ErrorMessage = "密碼長度應介於 {2} 到 {1} 字元，且複雜度四選三")]
         [Display(Name = "密碼")]
-        public string Password { get; set; }
+        public string Pwd { get; set; }
 
         [Required(ErrorMessage = "請上傳申請資格附檔")]
         [Display(Name = "申請資格附檔")]
         public HttpPostedFileBase QualificationAttachment { get; set; }
 
-        [Required(ErrorMessage = "請填寫單位編號")]
-        [Display(Name = "單位編號")]
-        public string OrganizationNumber { get; set; }
-
-        public bool IsOrganizationExist { get; set; } // 用來判斷系統是否有該單位
-
         [Display(Name = "狀態")]
-        public string Status { get; set; } // 設定狀態為待審
+        public string Status { get; set; } 
+
+        [Required(ErrorMessage = "您必須同意個人資料蒐集同意事項")]
+        [Display(Name = "個資蒐集同意事项")]
+        public bool Agreement { get; set; }
+
+        public OrgViewModel org { get; set; }
+
+        public string ErrorMessage { get; set; } 
+
     }
 
 }

@@ -23,8 +23,8 @@ namespace WebApplicationDemo.Models
         public int id { get; set; }
         public string title { get; set; }
         public string org_no { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
-        public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<System.DateTimeOffset> created_at { get; set; }
+        public Nullable<System.DateTimeOffset> updated_at { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users> users { get; set; }

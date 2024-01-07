@@ -1,4 +1,4 @@
-﻿
+﻿@using WebApplicationDemo.Controllers
 @model WebApplicationDemo.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
@@ -18,122 +18,111 @@
             <div class="col-lg-7">
                 <div class="p-5">
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        <h1 class="h4 text-gray-900 mb-4">
+                            歡迎註冊！
+                        </h1>
                     </div>
-                    <form class="user">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                       placeholder="First Name">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                       placeholder="Last Name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                   placeholder="Email Address">
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleInputPassword" placeholder="Password">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleRepeatPassword" placeholder="Repeat Password">
-                            </div>
-                        </div>
-                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                            Register Account
-                        </a>
-                        <hr>
-                        @*<a href="index.html" class="btn btn-google btn-user btn-block">
-                            <i class="fab fa-google fa-fw"></i> Register with Google
-                        </a>
-                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                        </a>*@
-                    </form>
-                    <hr>
-                    <div class="text-center">
-                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                    </div>
-                    <div class="text-center">
-                        <a class="small" href="login.html">Already have an account? Login!</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">註冊帳號</div>
-                <div class="card-body">
-                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm(nameof(AccountController.Register), "Account", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm();" }))
                     {
                         @Html.AntiForgeryToken()
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Name, new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger error-text-danger" })
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                @Html.LabelFor(m => m.org.OrganizationNumber, new { @class = "form-label field-required" })
+                                @Html.TextBoxFor(m => m.org.OrganizationNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.org.OrganizationNumber, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6  mt-2">
+                                <label class="form-label"></label>
+                                <button type="button" class="btn btn-primary btn-user btn-block" id="createOrg">
+                                    <i class="fas fa-plus fa-sm mr-2"></i>建立單位
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group" id="OrgName" style="display: none;">
+                            @Html.LabelFor(m => m.org.OrganizationName, new { @class = "form-label field-required" })
+                            @Html.TextBoxFor(m => m.org.OrganizationName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.org.OrganizationName, "", new { @class = "text-danger" })
+                        </div>
+                        <hr />
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                @Html.LabelFor(m => m.Name, new { @class = "form-label field-required" })
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(m => m.Birthday, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Birthday, "{0:yyyy-MM-dd}", new { @class = "form-control", @id = "datepicker" })
+                                @Html.ValidationMessageFor(m => m.Birthday, "", new { @class = "text-danger" })
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Birthday, new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.Birthday, "{0:yyyy-MM-dd}", new { @class = "form-control", @id = "datepicker" })
-                            @Html.ValidationMessageFor(m => m.Birthday, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "form-label field-required" })
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Account, new { @class = "form-label" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Account, new { @class = "form-label field-required" })
                             @Html.TextBoxFor(m => m.Account, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Pwd, new { @class = "form-label field-required" })
+                            @Html.PasswordFor(m => m.Pwd, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Pwd, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.QualificationAttachment, new { @class = "form-label" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.QualificationAttachment, new { @class = "form-label field-required" })
                             @Html.TextBoxFor(m => m.QualificationAttachment, new { type = "file", @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.QualificationAttachment, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.OrganizationNumber, new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.OrganizationNumber, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.OrganizationNumber, "", new { @class = "text-danger" })
+                        <div class="form-group text-center">
+                            <label>
+                                @Html.CheckBoxFor(m => m.Agreement) 我同意 <a href="#">個人資料蒐集同意事項</a>
+                            </label>
+                            @Html.ValidationMessageFor(m => m.Agreement, "", new { @class = "text-danger" })
                         </div>
 
-                        <button type="submit" class="btn btn-primary">送出</button>
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            確認送出
+                        </button>
+                        <hr>
+
+
+                        <div class="text-center">
+                            <a class="small" href="#" onclick="undo()">忘記密碼</a> |
+                            @Html.ActionLink("直接登入", "Login", "Account", new { area = "" }, new { @class = "small" })
+                        </div>
+
                     }
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
+
 @section Scripts {
+
+
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 
     <script>
         $(function () {
@@ -143,7 +132,59 @@
                 changeMonth: true,
                 yearRange: "-100:+0"  // 可以選擇的年份範圍
             });
+
+            $("#createOrg").on("click", function () {
+                // 隱藏 m.org.OrganizationName 所在整個 div
+                $("#OrgName").show();
+            });
+
+            // 當點擊 checkOrg 按鈕時
+            $("#checkOrg").on("click", function () {
+
+                // 使用 AJAX 傳遞數據到 CheckOrg ActionResult
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("CheckOrg", "Account")",  // 請確保正確的 ActionResult 地址
+                    data: {
+                        organizationNumber: $("input[name='org.OrganizationNumber']").val(),
+                        organizationName: $("input[name='org.OrganizationName']").val()
+                    },
+                    success: function (result) {
+                        if (result.Success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "新增成功"
+                            });
+                            //$("#org_OrganizationNumber").val(result.Message);
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "新增失敗",
+                                text: result.Message
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        // 處理錯誤
+                        console.log(error);
+                    }
+                });
+            });
+
         });
+
+        function validateForm() {
+            var agreementCheckbox = document.getElementById("Agreement");
+            if (!agreementCheckbox.checked) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "您必須同意個人資料蒐集同意事項"
+                });
+                return false; // 取消表單提交
+            }
+            return true; // 允許表單提交
+        }
     </script>
 }
 

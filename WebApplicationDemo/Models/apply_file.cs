@@ -17,8 +17,8 @@ namespace WebApplicationDemo.Models
         public int id { get; set; }
         public Nullable<int> user_id { get; set; }
         public string file_path { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
-        public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<System.DateTimeOffset> created_at { get; set; }
+        public Nullable<System.DateTimeOffset> updated_at { get; set; }
     
         public virtual users users { get; set; }
     }

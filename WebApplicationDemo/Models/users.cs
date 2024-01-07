@@ -21,6 +21,7 @@ namespace WebApplicationDemo.Models
         }
     
         public int id { get; set; }
+        public Nullable<int> user_type { get; set; }
         public Nullable<int> org_id { get; set; }
         public string user_name { get; set; }
         public Nullable<System.DateTime> birthday { get; set; }
@@ -28,9 +29,9 @@ namespace WebApplicationDemo.Models
         public string user_account { get; set; }
         public string user_hash { get; set; }
         public string user_salt { get; set; }
-        public string status { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
-        public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<int> status { get; set; }
+        public Nullable<System.DateTimeOffset> created_at { get; set; }
+        public Nullable<System.DateTimeOffset> updated_at { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<apply_file> apply_file { get; set; }
